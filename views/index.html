@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="app.js"></script>
+    <title>Alpine JS</title>
+    <style>
+        table {
+          border-collapse: collapse;
+        }
+        th,
+        td {
+          border: 1px solid #808080;
+          padding: 5px;
+        }
+        a:visited {
+            color: blue;
+        }
+    </style>
+  </head>
+  <body x-data="App()" x-init="getCourses()">
+    <h1>Alpine JS</h1>
+    <div style="display: flex; gap: 30px;">
+        <div>
+            <h2>Courses</h2>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Code</th>
+                <th>Title</th>
+                <th>CrHr.</th>
+                <th>Semester</th>
+            </tr>
+            <template x-for="course in courses" :key="course.cid">
+                <tr>
+                    <td x-text="course.cid"></td>
+                    <td x-text="course.code"></td>
+                    <td>
+                    <a href="#" x-text="course.title" @click.prevent="Edit(course.cid)"></a>
+                    </td>
+                    <td x-text="course.crhr"></td>
+                    <td x-text="course.semester"></td>
+                </tr>
+            </template>
+        </table>
+        </div>
+        <div x-show="Object.keys(selectedCourse).length !== 0">
+            <h2>Course Details</h2>
+            <form>
+                <table>
+                    <tr>
+                        <th>Id : </th>
+                        <td><input type="text" x-model="selectedCourse.cid" name="cid" readonly size="1"></td>
+                    </tr>
+                    <tr>
+                        <th>Code : </th>
+                        <td><input type="text" x-model="selectedCourse.code" name="code" size="5"></td>
+                    </tr>
+                    <tr>
+                        <th>Title : </th>
+                        <td><textarea x-model="selectedCourse.title" name="title" rows="2" cols="30"></textarea></td>
+                    </tr>
+                    <tr>
+                        <th>CrHr : </th>
+                        <td><input type="text" x-model="selectedCourse.crhr" name="crhr" size="3"></td>
+                    </tr>
+                    <tr>
+                        <th>Semester : </th>
+                        <td><input type="text" x-model="selectedCourse.semester" name="semester" size="3"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button type="button" @click="Save()">Update</button></td>
+                    </tr>
+                </table>
+            </form>
+            <pre x-text="JSON.stringify(selectedCourse, null, 2)"></pre>
+        </div>
+    </div>
+  
+  </body>
+</html>
